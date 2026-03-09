@@ -129,7 +129,7 @@ public class DTIServer extends DefaultSingleRecoverable {
                     }
 
                     nftToPrice.setValue(request.getValue());
-                    response.setTokenId(0);
+                    response.setTokenId(nftToPrice.getId());
                     break;
 
                 case BUY_NFT:
@@ -177,6 +177,9 @@ public class DTIServer extends DefaultSingleRecoverable {
                     }
                     //transferir nft para o comrpador
                     nftToBuy.setOwner(senderId);
+                    break;
+                
+                default:
                     break;
             }
 
@@ -232,6 +235,9 @@ public class DTIServer extends DefaultSingleRecoverable {
                         }
                     }
                     response.setNfts(foundNfts);
+                    break;
+
+                default:
                     break;
             }
 
