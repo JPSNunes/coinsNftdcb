@@ -45,7 +45,7 @@ public class DTIStub {
         byte[] rep;
         try {
             GenericMessage request = new GenericMessage(GenericMessage.Type.MY_COINS);
-            rep = serviceProxy.invokeOrdered(GenericMessage.toBytes(request));
+            rep = serviceProxy.invokeUnordered(GenericMessage.toBytes(request));
         } catch (IOException e) {
             System.err.println("Failed to send MY_COINS request");
             return null;
@@ -92,7 +92,7 @@ public class DTIStub {
         byte[] rep;
         try {
             GenericMessage request = new GenericMessage(GenericMessage.Type.MY_NFTS);
-            rep = serviceProxy.invokeOrdered(GenericMessage.toBytes(request));
+            rep = serviceProxy.invokeUnordered(GenericMessage.toBytes(request));
         } catch (IOException e) {
             System.err.println("Failed to send MY_NFTS request");
             return null;
@@ -164,7 +164,7 @@ public class DTIStub {
         try {
             GenericMessage request = new GenericMessage(GenericMessage.Type.SEARCH_NFT);
             request.setName(text);
-            rep = serviceProxy.invokeOrdered(GenericMessage.toBytes(request));
+            rep = serviceProxy.invokeUnordered(GenericMessage.toBytes(request));
         } catch (IOException e) {
             System.err.println("Failed to send SEARCH_NFT request");
             return null;

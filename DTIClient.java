@@ -15,12 +15,12 @@ public class DTIClient {
         int clientId = (args.length > 0) ? Integer.parseInt(args[0]) : 1001;
         DTIStub dtiStub = new DTIStub(clientId);
         Console console = System.console();
-        Scanner cmdScanner = new Scanner(console.readLine("\n  > "));
 
         System.out.println("\nCommands:\n");
         printCommands();
 
         while (true) {
+            Scanner cmdScanner = new Scanner(console.readLine("\n  > "));
             String cmd = "";
 
             if (cmdScanner.hasNext()) {
@@ -39,10 +39,10 @@ public class DTIClient {
                 }
                 case "MY_COINS": {
                     List<Coin> coinList = dtiStub.my_coins();
-                    if (coinList.isEmpty()) {
+                    if (coinList == null || coinList.isEmpty()) {
                         System.out.println("You do not have any coins.");
                     } else {
-                        for (Coin c : dtiStub.my_coins()) {
+                        for (Coin c : coinList) {
                             System.out.println(c);
                         }
                     }
@@ -64,10 +64,11 @@ public class DTIClient {
                     } else {
                         System.out.println("Operation successful. Leftover value with coin " + code);
                     }
+                    break;
                 }
                 case "MY_NFTS": {
                     List<NFT> nfts = dtiStub.my_nfts();
-                    if (nfts.isEmpty()) {
+                    if (nfts == null || nfts.isEmpty()) {
                         System.out.println("You do not have any NFTs.");
                     } else {
                         for (NFT n : nfts) {
@@ -108,7 +109,7 @@ public class DTIClient {
                 case "SEARCH_NFT": {
                     String name = cmdScanner.next();
                     List<NFT> matches = dtiStub.search_nft(name);
-                    if (matches.isEmpty()) {
+                    if (matches == null || matches.isEmpty()) {
                         System.out.println("No matches for the name given.");
                     } else {
                         for (NFT n : matches) {
