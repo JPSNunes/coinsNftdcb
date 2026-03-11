@@ -17,7 +17,7 @@ public class DTIClient {
         Console console = System.console();
 
         System.out.println("\nCommands:\n");
-        printCommands();
+        printCommands(false);
 
         while (true) {
             Scanner cmdScanner = new Scanner(console.readLine("\n  > "));
@@ -34,7 +34,11 @@ public class DTIClient {
                         break;
                     }
                     long newCoinId = dtiStub.mint(value);
-                    System.out.println("New coin minted with ID: " + newCoinId);
+                    if (newCoinId == -1) {
+                        System.out.println("You do not have the necessary permissions to use this command.");
+                    } else {
+                        System.out.println("New coin minted with ID: " + newCoinId);
+                    }
                     break;
                 }
                 case "MY_COINS": {
@@ -141,7 +145,7 @@ public class DTIClient {
                     System.exit(0);
                 }
                 default:
-                    printCommands();
+                    printCommands(true);
                     break;
             }
         }
@@ -158,7 +162,7 @@ public class DTIClient {
 
     private static boolean validateArgs(Long valueOne, Long valueTwo, Integer intValue, String longArray) {
         if (!validateFields(valueOne, valueTwo, intValue, longArray)) {
-            printCommands();
+            printCommands(true);
             return false;
         }
         return true;
@@ -177,9 +181,11 @@ public class DTIClient {
         return true;
     }
 
-    private static void printCommands() {
+    private static void printCommands(boolean invalid) {
+        if (invalid) {
+            System.out.println("Invalid command. Commands are as follows:");
+        }
         System.out.println(
-            "Invalid command. Commands are as follows:\n" +
             "\tMY_COINS: Display your owned coins.\n" +
             "\tMINT <Value>: Mint new coins with the specified value.\n" +
             "\tSPEND <CoinIDs> <Receiver> <Value>: Transfer the specified value to the given recipient, from a list of coins.\n" +
